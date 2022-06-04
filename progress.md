@@ -100,5 +100,11 @@ I'm still not sure why dereferencing a userspace addr from kernel caused the cra
 
 turns out it also crashes when doing printk on the kernel-buffer copied struct, but it works fine otherwise- just the printk crashes it. No idea why this happens but it wasted me some precious time.
 
-disclaimer:  most of the hooked getdents64 is based on [this article](https://xcellerator.github.io/posts/linux_rootkits_06/), but I tried to understand every line that I copied.
+**disclaimer:**  most of the hooked getdents64 is based on [this article](https://xcellerator.github.io/posts/linux_rootkits_06/), but I tried to understand every line that I copied.
 
+**aother disclaimer:** there are still parts I don't understand properly here, most of which are 
+
+- kallsyms
+- make_address_rw/ro 
+
+still working on it.
