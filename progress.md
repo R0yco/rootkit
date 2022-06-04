@@ -108,3 +108,39 @@ turns out it also crashes when doing printk on the kernel-buffer copied struct, 
 - make_address_rw/ro 
 
 still working on it.
+
+
+
+
+
+# level 3
+
+from strace'ing netstat, it seems that the data comes from reading and parsing /proc/net/tcp file.
+
+```
+cat /proc/net/tcp
+  sl  local_address rem_address   st tx_queue rx_queue tr tm->when retrnsmt   uid  timeout inode                                                     
+   0: 00000000:1F40 00000000:0000 0A 00000000:00000000 00:00000000 00000000  1000        0 251662 1 0000000000000000 100 0 0 10 0                    
+   1: 0100007F:0277 00000000:0000 0A 00000000:00000000 00:00000000 00000000     0        0 40139 1 0000000000000000 100 0 0 10 0                     
+   2: 3500007F:0035 00000000:0000 0A 00000000:00000000 00:00000000 00000000   101        0 36619 1 0000000000000000 100 0 0 10 5                     
+   3: 803AA8C0:D062 95F1BDCE:01BB 01 00000000:00000000 00:00000000 00000000  1000        0 186237 1 0000000000000000 20 4 28 10 -1                   
+   4: 803AA8C0:C0E6 B3AF2734:01BB 01 00000000:00000000 02:000051DD 00000000  1000        0 69620 2 0000000000000000 20 4 28 10 -1                    
+   5: 803AA8C0:DE52 1121E32C:01BB 08 00000000:0000004E 02:00001147 00000000  1000        0 88197 2 0000000000000000 68 4 0 10 -1                     
+   6: 803AA8C0:8EFE EFED7522:01BB 01 00000000:00000000 00:00000000 00000000  1000        0 257294 1 0000000000000000 22 4 30 10 -1
+
+```
+
+this^ is while having a python httpserver on port 8000.
+
+```
+openat(AT_FDCWD, "/proc/net/tcp", O_RDONLY) = 3
+read(3, "  sl  local_address rem_address "..., 4096) = 1050
+
+```
+
+I can think of 2 options of how to solve this from here.
+
+1) hook the read syscall, and check if the opened file is /proc/net/tcp. if it is, remove the server line from the output.
+   - this will be complicated because if we hook the read function we only have an fd, not filename, and we will have to backtrack what the filename is.
+   - checking all the read outputs without checking if its relevant to us might have performance issues since read is a very very common syscall in linux
+2)  hook openat, and if it opens /proc/net/tcp, open it ourselves, and give out a "proxied" syscall.
