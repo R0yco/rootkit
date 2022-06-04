@@ -138,9 +138,142 @@ read(3, "  sl  local_address rem_address "..., 4096) = 1050
 
 ```
 
-I can think of 2 options of how to solve this from here.
+I can think of an option of how to solve this from here with syscall hooking:
 
-1) hook the read syscall, and check if the opened file is /proc/net/tcp. if it is, remove the server line from the output.
-   - this will be complicated because if we hook the read function we only have an fd, not filename, and we will have to backtrack what the filename is.
-   - checking all the read outputs without checking if its relevant to us might have performance issues since read is a very very common syscall in linux
-2)  hook openat, and if it opens /proc/net/tcp, open it ourselves, and give out a "proxied" syscall.
+hook the read syscall, and check if the opened file is /proc/net/tcp. if it is, remove the server line from the output.
+
+- this will be complicated because if we hook the read function we only have an fd, not filename, and we will have to backtrack what the filename is.
+- checking all the read outputs without checking if its relevant to us might have performance issues since read is a very common syscall in linux
+
+
+
+both of the above options seem complicated to implement.
+
+[this blog](https://xcellerator.github.io/posts/linux_rootkits_08/) reminded me that /proc is a virtual FS and not a real one, which means every read from it is actually outputted from a function in the kernel.
+
+```bash
+cat /proc/net/tcp
+sl  local_address rem_address   st tx_queue rx_queue tr tm->when retrnsmt   uid  timeout inode ....
+										.....snipped.....
+```
+
+I saw this print format, and decided to grep it in the linux kernel sources.
+
+```bash
+ grep rem_address -irnI .
+ /net/ipv4/tcp_ipv4.c:2655:             seq_puts(seq, "  sl  local_address rem_address   st tx_queue "
+./net/ipv4/ping.c:1146:         seq_puts(seq, "  sl  local_address rem_address   st tx_queue "
+./net/ipv4/raw.c:1073:          seq_printf(seq, "  sl  local_address rem_address   st tx_queue "
+./net/ipv4/udp.c:3094:          seq_puts(seq, "   sl  local_address rem_address   st tx_queue "
+
+```
+
+seems like the relevant one is /net/ipv4/tcp_ipv4.c
+
+```c
+static int tcp4_seq_show(struct seq_file *seq, void *v)
+{
+	struct tcp_iter_state *st;
+	struct sock *sk = v;
+
+	seq_setwidth(seq, TMPSZ - 1);
+	if (v == SEQ_START_TOKEN) {
+		seq_puts(seq, "  sl  local_address rem_address   st tx_queue "
+			   "rx_queue tr tm->when retrnsmt   uid  timeout "
+			   "inode");
+		goto out;
+	}
+	st = seq->private;
+
+	if (sk->sk_state == TCP_TIME_WAIT)
+		get_timewait4_sock(v, seq, st->num);
+	else if (sk->sk_state == TCP_NEW_SYN_RECV)
+		get_openreq4(v, seq, st->num);
+	else
+		get_tcp4_sock(v, seq, st->num);
+out:
+	seq_pad(seq, '\n');
+	return 0;
+}
+```
+
+seems like this function is called for every line of output. if I hook it and make sure it doesn't print out the line with my chosen port, then I can effectively hide it.
+
+```c
+static void get_tcp4_sock(struct sock *sk, struct seq_file *f, int i)
+{
+	int timer_active;
+	unsigned long timer_expires;
+	const struct tcp_sock *tp = tcp_sk(sk);
+	const struct inet_connection_sock *icsk = inet_csk(sk);
+	const struct inet_sock *inet = inet_sk(sk);
+	const struct fastopen_queue *fastopenq = &icsk->icsk_accept_queue.fastopenq;
+	__be32 dest = inet->inet_daddr;
+	__be32 src = inet->inet_rcv_saddr;
+	__u16 destp = ntohs(inet->inet_dport);
+	__u16 srcp = ntohs(inet->inet_sport);
+	int rx_queue;
+	int state;
+
+	if (icsk->icsk_pending == ICSK_TIME_RETRANS ||
+	    icsk->icsk_pending == ICSK_TIME_REO_TIMEOUT ||
+	    icsk->icsk_pending == ICSK_TIME_LOSS_PROBE) {
+		timer_active	= 1;
+		timer_expires	= icsk->icsk_timeout;
+	} else if (icsk->icsk_pending == ICSK_TIME_PROBE0) {
+		timer_active	= 4;
+		timer_expires	= icsk->icsk_timeout;
+	} else if (timer_pending(&sk->sk_timer)) {
+		timer_active	= 2;
+		timer_expires	= sk->sk_timer.expires;
+	} else {
+		timer_active	= 0;
+		timer_expires = jiffies;
+	}
+
+	state = inet_sk_state_load(sk);
+	if (state == TCP_LISTEN)
+		rx_queue = READ_ONCE(sk->sk_ack_backlog);
+	else
+		/* Because we don't lock the socket,
+		 * we might find a transient negative value.
+		 */
+		rx_queue = max_t(int, READ_ONCE(tp->rcv_nxt) -
+				      READ_ONCE(tp->copied_seq), 0);
+
+	seq_printf(f, "%4d: %08X:%04X %08X:%04X %02X %08X:%08X %02X:%08lX "
+			"%08X %5u %8d %lu %d %pK %lu %lu %u %u %d",
+		i, src, srcp, dest, destp, state,
+		READ_ONCE(tp->write_seq) - tp->snd_una,
+		rx_queue,
+		timer_active,
+		jiffies_delta_to_clock_t(timer_expires - jiffies),
+		icsk->icsk_retransmits,
+		from_kuid_munged(seq_user_ns(f), sock_i_uid(sk)),
+		icsk->icsk_probes_out,
+		sock_i_ino(sk),
+		refcount_read(&sk->sk_refcnt), sk,
+		jiffies_to_clock_t(icsk->icsk_rto),
+		jiffies_to_clock_t(icsk->icsk_ack.ato),
+		(icsk->icsk_ack.quick << 1) | inet_csk_in_pingpong_mode(sk),
+		tcp_snd_cwnd(tp),
+		state == TCP_LISTEN ?
+		    fastopenq->max_qlen :
+		    (tcp_in_initial_slowstart(tp) ? -1 : tp->snd_ssthresh));
+}
+```
+
+from here ^ I can see that it is going to be pretty easy, we just need to create an inet_sock from the socket buffer like here:
+
+```c
+	const struct inet_sock *inet = inet_sk(sk);
+	if(srcp ==  my_rootkit_port){
+        //do_bad_stuff
+    }
+```
+
+and hook this logic before tcp4_seq_show output is called.
+
+
+
+I will be using ftrace to trace the 
