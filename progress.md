@@ -276,4 +276,10 @@ and hook this logic before tcp4_seq_show output is called.
 
 
 
-I will be using ftrace to trace the 
+I will be using ftrace to hook the function. 
+I wanted to use the helper module [this dude wrote](https://gist.github.com/xcellerator/ac2c039a6bbd7782106218298f5e5ac1#file-ftrace_helper-h), but it didn't go so well, because in my kernel the C api changed- mostly names of structs and enums- this was easy enough to fix, but also because he relies on kallsyms_lookup_name function being exported, which it isn't in my kernel, so I need to solve it.
+
+This is mostly a technical issue since I already dealt with it in my lkm code, but I need to give it to the helper as well.
+
+Perhaps I need to put it in a seperate header file and include it in both the module and the helper.
+

