@@ -283,3 +283,17 @@ This is mostly a technical issue since I already dealt with it in my lkm code, b
 
 Perhaps I need to put it in a seperate header file and include it in both the module and the helper.
 
+did it and now it works.
+
+
+
+currently stuck in a situation where the process of hooking with ftrace somehow crashes the kernel, and i'm unable to debug it properly.
+
+I should properly step up my debug game- printk is not enough and doesn't help at all in the case of crashes.
+
+
+
+
+
+I've decided its better to write every step of the rootkit in a seperate module, for better debugging.
+
