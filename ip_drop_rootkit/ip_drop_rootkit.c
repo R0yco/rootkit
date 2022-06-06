@@ -58,7 +58,6 @@ asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct pa
 	unsigned int src_ip = (unsigned int)ip_header->saddr;
 	unsigned int dest_ip = (unsigned int)ip_header->daddr;
 
-	printk(KERN_INFO "a: src IP address = %pI4 dst IP address = %pI4 src IP %x\n", &src_ip, &dest_ip, src_ip);
 	if (src_ip == 0x01010101)
 	{
 		printk(KERN_INFO "a: found traffic from 1.1.1.1\n");
