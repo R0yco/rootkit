@@ -345,3 +345,62 @@ but this solution is not very good- getdents64 gets an open fd and uses it, it i
 so I will try to find a more subtle solution, and if it doesn't work I will come back to this.
 
 actually, my current solution for hiding from ls works out of the box for hiding procceses with this method too:
+
+```bash
+_  ls_rootkit git:(main) _ ps aux | grep python
+
+root         800  0.0  0.5  49668 21448 ?        Ss   Jun05   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+root         948  0.0  0.6 126692 23360 ?        Ssl  Jun05   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+royco      16334  0.6  0.4  38716 17256 pts/3    S+   01:11   0:00 python3 -m http.server
+royco      16336  0.0  0.0  17864  2372 pts/2    S+   01:11   0:00 grep --color=auto --exclude-dir=.bzr --exclude-dir=CVS --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn --exclude-dir=.idea --exclude-dir=.tox python
+
+
+
+_  ls_rootkit git:(main) _ sudo ./insert_rootkit.sh 16334 
+
+_  ls_rootkit git:(main) _ ps aux | grep python          
+root         800  0.0  0.5  49668 21448 ?        Ss   Jun05   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+root         948  0.0  0.6 126692 23360 ?        Ssl  Jun05   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+royco      16374  0.0  0.0  17864  2304 pts/2    S+   01:11   0:00 grep --color=auto --exclude-dir=.bzr --exclude-dir=CVS --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn --exclude-dir=.idea --exclude-dir=.tox python
+
+```
+
+
+
+# blocking traffic by filter
+
+now I need to block traffic by a certain filter. this seems like a big goal so I don't even know where to start. if I want to block by IP then I can sit on the IP stack and block anything- arp, ping, tcp udp etc. and if I sit higher- tcp for example- I can filter by port but cannot filter non-tcp protocols.
+
+seems like IP is a better choice for now.
+
+```c
+int ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
+	   struct net_device *orig_dev)
+{
+	struct net *net = dev_net(dev);
+
+	skb = ip_rcv_core(skb, net);
+	if (skb == NULL)
+		return NET_RX_DROP;
+
+	return NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
+		       net, NULL, skb, dev, NULL,
+		       ip_rcv_finish);
+}
+```
+
+from some poking around, this might be relevant.
+
+https://elixir.bootlin.com/linux/latest/source/net/ipv4/ip_input.c#L547	
+
+I used [this article](https://blog.packagecloud.io/monitoring-tuning-linux-networking-stack-receiving-data/) as reference.
+
+it seems pretty straight forward what I need to do here:
+
+​	return NET_RX_DROP; - this line probably drops the packet.
+
+1. hook this function
+2. parse the sk_buff struct
+3.  extract the source IP
+4. if it is our target bad IP, drop with NET_RX_DROP.
+5. else, return.
