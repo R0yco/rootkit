@@ -87,7 +87,7 @@ which means that the dirent structure which I want to change will be in the RSI 
 
 ### crashing
 
-i've run into a situation where the following line caused a system crash:
+i have run into a situation where the following line caused a system crash:
 
 ```c
 printk("%d\n",dirent->d_reclen); - this line crashes the kernel
@@ -397,7 +397,7 @@ I used [this article](https://blog.packagecloud.io/monitoring-tuning-linux-netwo
 
 it seems pretty straight forward what I need to do here:
 
-​	return NET_RX_DROP; - this line probably drops the packet.
+	return NET_RX_DROP; - this line probably drops the packet.
 
 1. hook this function
 2. parse the sk_buff struct
@@ -419,8 +419,7 @@ so, like before, I am using the wrapper for ftrace.
 static struct ftrace_hook hooks[] = {
  	HOOK("ip_rcv", new_ip_rcv, &old_ip_rcv),
  };
-___sniped___
-    
+___snipped___
 asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
 	   struct net_device *orig_dev) {
 	printk("hooked ip_rcv! hooray\n");
@@ -442,8 +441,6 @@ from [here](https://stackoverflow.com/questions/32585573/how-to-read-actual-dest
 	unsigned int src_ip = (unsigned int)ip_header->saddr;
 	unsigned int dest_ip = (unsigned int)ip_header->daddr;
 	printk(KERN_DEBUG "src IP address = %pI4 dst IP address = %pI4\n", &src_ip, &dest_ip);
-
-
 ```
 
 after looking at dmesg, all I see is those logs:
@@ -482,7 +479,6 @@ I rebooted the machine and it passed completely.
 but anyway, my poc worked:
 
 ```c
-
 asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
 	   struct net_device *orig_dev) {
 
@@ -500,8 +496,7 @@ asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct pa
 	return old_ip_rcv(skb, dev, pt, orig_dev);
 
 
-}
-
+}	
 ```
 
 this blocks all IP traffic incomming from 1.1.1.1 .
@@ -521,13 +516,85 @@ PING 1.1.1.1 (1.1.1.1) 56(84) bytes of data.
 --- 1.1.1.1 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1002ms
 rtt min/avg/max/mdev = 3.623/4.009/4.396/0.386 ms
-
-
 ```
+
 
 there are still a lot of ways to improve this:
 
 make this work on ARP as well (since arp doesn't have an ip header), make a filter for tcp/udp ports and etc.
 
 but this is but a humble PoC.
+
+
+# level 6
+
+I looked at kernel code a little bit and found this:
+
+```c
+#ifdef CONFIG_PROC_FS
+/* Called by the /proc file system to return a list of modules. */
+static void *m_start(struct seq_file *m, loff_t *pos)
+{
+	mutex_lock(&module_mutex);
+	return seq_list_start(&modules, *pos);
+}
+```
+
+this looks relevant to my cause.
+
+So it seems like this
+
+```c
+static int m_show(struct seq_file *m, void *p)
+{
+	struct module *mod = list_entry(p, struct module, list);
+	char buf[MODULE_FLAGS_BUF_SIZE];
+	void *value;
+
+	/* We always ignore unformed modules. */
+	if (mod->state == MODULE_STATE_UNFORMED)
+		return 0;
+
+	seq_printf(m, "%s %u",
+		   mod->name, mod->init_layout.size + mod->core_layout.size);
+	print_unload_info(m, mod);
+
+	/* Informative for users. */
+	seq_printf(m, " %s",
+		   mod->state == MODULE_STATE_GOING ? "Unloading" :
+		   mod->state == MODULE_STATE_COMING ? "Loading" :
+		   "Live");
+	/* Used by oprofile and other similar tools. */
+	value = m->private ? NULL : mod->core_layout.base;
+	seq_printf(m, " 0x%px", value);
+
+	/* Taints info */
+	if (mod->taints)
+		seq_printf(m, " %s", module_flags(mod, buf));
+
+	seq_puts(m, "\n");
+	return 0;
+}
+```
+
+is our culprit function that prints out the module lines. 
+
+
+
+```c
+static const struct seq_operations modules_op = {
+	.start	= m_start,
+	.next	= m_next,
+	.stop	= m_stop,
+	.show	= m_show
+};
+```
+
+this is a linked list containing all the kernel modules. 
+
+
+
+like in level 4, this function seems to only print the kernel module information and then return, which means that I can easily hook and mess it up and nothing truely "bad" will happen.
+
+so lets hook it with ftrace like before!
 
