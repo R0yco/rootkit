@@ -1,0 +1,1368 @@
+execve("/usr/sbin/lsmod", ["lsmod"], 0x7ffc60fee480 /* 50 vars */) = 0
+brk(NULL)                               = 0x55cf7beb5000
+arch_prctl(0x3001 /* ARCH_??? */, 0x7ffd27685e40) = -1 EINVAL (Invalid argument)
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ff5ae1b2000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=65445, ...}, AT_EMPTY_PATH) = 0
+mmap(NULL, 65445, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7ff5ae1a2000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libzstd.so.1", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=841808, ...}, AT_EMPTY_PATH) = 0
+mmap(NULL, 843832, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7ff5ae0d3000
+mmap(0x7ff5ae0dd000, 729088, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xa000) = 0x7ff5ae0dd000
+mmap(0x7ff5ae18f000, 69632, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xbc000) = 0x7ff5ae18f000
+mmap(0x7ff5ae1a0000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xcc000) = 0x7ff5ae1a0000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/liblzma.so.5", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=170456, ...}, AT_EMPTY_PATH) = 0
+mmap(NULL, 172296, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7ff5ae0a8000
+mmap(0x7ff5ae0ab000, 110592, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x7ff5ae0ab000
+mmap(0x7ff5ae0c6000, 45056, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e000) = 0x7ff5ae0c6000
+mmap(0x7ff5ae0d1000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x28000) = 0x7ff5ae0d1000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libcrypto.so.3", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\0\0\0\0\0\0\0\0"..., 832) = 832
+newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=4447536, ...}, AT_EMPTY_PATH) = 0
+mmap(NULL, 4461824, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7ff5adc66000
+mmap(0x7ff5add18000, 2478080, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0xb2000) = 0x7ff5add18000
+mmap(0x7ff5adf75000, 860160, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x30f000) = 0x7ff5adf75000
+mmap(0x7ff5ae047000, 385024, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3e0000) = 0x7ff5ae047000
+mmap(0x7ff5ae0a5000, 9472, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7ff5ae0a5000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0P\237\2\0\0\0\0\0"..., 832) = 832
+pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+pread64(3, "\4\0\0\0 \0\0\0\5\0\0\0GNU\0\2\0\0\300\4\0\0\0\3\0\0\0\0\0\0\0"..., 48, 848) = 48
+pread64(3, "\4\0\0\0\24\0\0\0\3\0\0\0GNU\0\211\303\313\205\371\345PFwdq\376\320^\304A"..., 68, 896) = 68
+newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=2216304, ...}, AT_EMPTY_PATH) = 0
+pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+mmap(NULL, 2260560, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7ff5ada3e000
+mmap(0x7ff5ada66000, 1658880, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x28000) = 0x7ff5ada66000
+mmap(0x7ff5adbfb000, 360448, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1bd000) = 0x7ff5adbfb000
+mmap(0x7ff5adc53000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x214000) = 0x7ff5adc53000
+mmap(0x7ff5adc59000, 52816, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7ff5adc59000
+close(3)                                = 0
+mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ff5ada3c000
+arch_prctl(ARCH_SET_FS, 0x7ff5ada3cc40) = 0
+set_tid_address(0x7ff5ada3cf10)         = 22139
+set_robust_list(0x7ff5ada3cf20, 24)     = 0
+rseq(0x7ff5ada3d5e0, 0x20, 0, 0x53053053) = 0
+mprotect(0x7ff5adc53000, 16384, PROT_READ) = 0
+mprotect(0x7ff5ae047000, 372736, PROT_READ) = 0
+mprotect(0x7ff5ae0d1000, 4096, PROT_READ) = 0
+mprotect(0x7ff5ae1a0000, 4096, PROT_READ) = 0
+mprotect(0x55cf7b910000, 8192, PROT_READ) = 0
+mprotect(0x7ff5ae1ec000, 8192, PROT_READ) = 0
+prlimit64(0, RLIMIT_STACK, NULL, {rlim_cur=8192*1024, rlim_max=RLIM64_INFINITY}) = 0
+munmap(0x7ff5ae1a2000, 65445)           = 0
+getrandom("\x56\x02\xab\x5d\x3e\x9e\xf1\x23", 8, GRND_NONBLOCK) = 8
+brk(NULL)                               = 0x55cf7beb5000
+brk(0x55cf7bed6000)                     = 0x55cf7bed6000
+uname({sysname="Linux", nodename="royco-virtual-machine", ...}) = 0
+openat(AT_FDCWD, "/lib/modules/5.15.0-35-generic/modules.softdep", O_RDONLY|O_CLOEXEC) = 3
+fcntl(3, F_GETFL)                       = 0x8000 (flags O_RDONLY|O_LARGEFILE)
+newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=1480, ...}, AT_EMPTY_PATH) = 0
+read(3, "# Soft dependencies extracted fr"..., 4096) = 1480
+read(3, "", 4096)                       = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/proc/cmdline", O_RDONLY|O_CLOEXEC) = 3
+read(3, "BOOT_IMAGE=/boot/vmlinuz-5.15.0-"..., 4095) = 200
+read(3, "", 3895)                       = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/proc/modules", O_RDONLY|O_CLOEXEC) = 3
+newfstatat(3, "", {st_mode=S_IFREG|0444, st_size=0, ...}, AT_EMPTY_PATH) = 0
+read(3, "module_hiding_rootkit 16384 0 - "..., 1024) = 1024
+read(3, "97_codec 180224 1 snd_ens1371, L"..., 1024) = 1024
+read(3, " 1 btusb, Live 0x000000000000000"..., 1024) = 1024
+read(3, "80 0 - Live 0x0000000000000000\ni"..., 1024) = 1024
+read(3, " 0x0000000000000000\ne1000 155648"..., 1024) = 191
+read(3, "", 1024)                       = 0
+close(3)                                = 0
+newfstatat(1, "", {st_mode=S_IFREG|0664, st_size=6161, ...}, AT_EMPTY_PATH) = 0
+openat(AT_FDCWD, "/sys/module/module_hiding_rootkit/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/module_hiding_rootkit", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/module_hiding_rootkit/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sysdig_probe/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sysdig_probe", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "647168\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sysdig_probe/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/isofs/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/isofs", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "53248\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/isofs/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/rfcomm/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "4\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/rfcomm", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "81920\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/rfcomm/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/bnep/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/bnep", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "28672\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/bnep/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/intel_rapl_msr/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/intel_rapl_msr", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "20480\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/intel_rapl_msr/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/intel_rapl_common/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/intel_rapl_common", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "36864\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/intel_rapl_common/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 88
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vsock_loopback/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vsock_loopback", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vsock_loopback/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/crct10dif_pclmul/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/crct10dif_pclmul", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/crct10dif_pclmul/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_vsock_virtio_transport_common/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_vsock_virtio_transport_common", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "40960\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_vsock_virtio_transport_common/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 88
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ghash_clmulni_intel/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ghash_clmulni_intel", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ghash_clmulni_intel/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_vsock_vmci_transport/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_vsock_vmci_transport", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "32768\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_vsock_vmci_transport/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vsock/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "7\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vsock", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "45056\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vsock/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 5 entries */, 32768) = 192
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/aesni_intel/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/aesni_intel", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "376832\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/aesni_intel/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/crypto_simd/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/crypto_simd", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/crypto_simd/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/cryptd/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/cryptd", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "24576\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/cryptd/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 4 entries */, 32768) = 120
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/rapl/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/rapl", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "20480\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/rapl/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_ens1371/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_ens1371", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "32768\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_ens1371/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_ac97_codec/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_ac97_codec", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "180224\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_ac97_codec/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/gameport/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/gameport", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "20480\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/gameport/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ac97_bus/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ac97_bus", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ac97_bus/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 88
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_balloon/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_balloon", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "24576\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_balloon/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_pcm/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_pcm", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "139264\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_pcm/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 4 entries */, 32768) = 120
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq_midi/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq_midi", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "20480\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq_midi/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq_midi_event/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq_midi_event", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq_midi_event/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/nls_iso8859_1/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/nls_iso8859_1", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/nls_iso8859_1/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_rawmidi/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_rawmidi", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "49152\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_rawmidi/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 4 entries */, 32768) = 112
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "73728\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 4 entries */, 32768) = 120
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq_device/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "3\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq_device", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_seq_device/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 5 entries */, 32768) = 144
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/joydev/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/joydev", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "32768\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/joydev/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/input_leds/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/input_leds", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/input_leds/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_timer/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_timer", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "40960\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd_timer/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 4 entries */, 32768) = 112
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/serio_raw/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/serio_raw", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "20480\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/serio_raw/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "11\n", 31)                     = 3
+read(3, "", 28)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "102400\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/snd/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 9 entries */, 32768) = 288
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btusb/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btusb", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "61440\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btusb/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btrtl/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btrtl", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "24576\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btrtl/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btbcm/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btbcm", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "24576\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btbcm/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btintel/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btintel", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "40960\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/btintel/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/bluetooth/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "27\n", 31)                     = 3
+read(3, "", 28)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/bluetooth", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "688128\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/bluetooth/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 8 entries */, 32768) = 232
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ecdh_generic/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ecdh_generic", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ecdh_generic/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ecc/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ecc", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "36864\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ecc/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/soundcore/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/soundcore", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/soundcore/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 72
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_vmci/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_vmci", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "81920\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmw_vmci/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 4 entries */, 32768) = 128
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mac_hid/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mac_hid", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mac_hid/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sch_fq_codel/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sch_fq_codel", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "20480\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sch_fq_codel/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmwgfx/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "17\n", 31)                     = 3
+read(3, "", 28)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmwgfx", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "360448\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/vmwgfx/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ttm/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ttm", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "86016\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ttm/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/drm_kms_helper/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/drm_kms_helper", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "307200\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/drm_kms_helper/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/cec/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/cec", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "61440\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/cec/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 88
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/rc_core/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/rc_core", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "65536\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/rc_core/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 72
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/fb_sys_fops/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/fb_sys_fops", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/fb_sys_fops/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 88
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/syscopyarea/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/syscopyarea", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/syscopyarea/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 88
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sysfillrect/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sysfillrect", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "20480\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sysfillrect/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 88
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sysimgblt/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sysimgblt", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/sysimgblt/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 88
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ipmi_devintf/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ipmi_devintf", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "20480\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ipmi_devintf/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ipmi_msghandler/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ipmi_msghandler", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "122880\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ipmi_msghandler/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/msr/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/msr", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/msr/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/parport_pc/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/parport_pc", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "49152\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/parport_pc/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ppdev/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ppdev", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "24576\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ppdev/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/lp/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/lp", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "28672\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/lp/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/parport/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "3\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/parport", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "65536\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/parport/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 5 entries */, 32768) = 136
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/drm/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "13\n", 31)                     = 3
+read(3, "", 28)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/drm", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "606208\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/drm/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 5 entries */, 32768) = 144
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ip_tables/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ip_tables", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "32768\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ip_tables/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/x_tables/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/x_tables", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "53248\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/x_tables/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/autofs4/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/autofs4", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "49152\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/autofs4/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/hid_generic/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/hid_generic", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/hid_generic/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/crc32_pclmul/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/crc32_pclmul", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/crc32_pclmul/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/psmouse/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/psmouse", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "176128\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/psmouse/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/usbhid/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/usbhid", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "65536\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/usbhid/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/hid/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/hid", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "147456\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/hid/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 4 entries */, 32768) = 112
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mptspi/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mptspi", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "24576\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mptspi/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mptscsih/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mptscsih", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "49152\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mptscsih/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mptbase/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mptbase", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "106496\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/mptbase/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 4 entries */, 32768) = 112
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ahci/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "2\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ahci", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "45056\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/ahci/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/libahci/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/libahci", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "45056\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/libahci/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 72
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/scsi_transport_spi/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "1\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/scsi_transport_spi", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "32768\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/scsi_transport_spi/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 3 entries */, 32768) = 80
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/e1000/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/e1000", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "155648\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/e1000/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/i2c_piix4/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/i2c_piix4", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "28672\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/i2c_piix4/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/pata_acpi/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/pata_acpi", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "16384\n", 31)                  = 6
+read(4, "", 25)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/pata_acpi/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/floppy/refcnt", O_RDONLY|O_CLOEXEC) = 3
+read(3, "0\n", 31)                      = 2
+read(3, "", 29)                         = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/floppy", O_RDONLY|O_CLOEXEC) = 3
+openat(3, "coresize", O_RDONLY|O_CLOEXEC) = 4
+read(4, "118784\n", 31)                 = 7
+read(4, "", 24)                         = 0
+close(4)                                = 0
+close(3)                                = 0
+openat(AT_FDCWD, "/sys/module/floppy/holders", O_RDONLY|O_NONBLOCK|O_CLOEXEC|O_DIRECTORY) = 3
+newfstatat(3, "", {st_mode=S_IFDIR|0755, st_size=0, ...}, AT_EMPTY_PATH) = 0
+getdents64(3, 0x55cf7bebe970 /* 2 entries */, 32768) = 48
+getdents64(3, 0x55cf7bebe970 /* 0 entries */, 32768) = 0
+close(3)                                = 0
+write(1, "Module                  Size  Us"..., 3372Module                  Size  Used by
+module_hiding_rootkit    16384  0
+sysdig_probe          647168  0
+isofs                  53248  2
+rfcomm                 81920  4
+bnep                   28672  2
+intel_rapl_msr         20480  0
+intel_rapl_common      36864  1 intel_rapl_msr
+vsock_loopback         16384  0
+crct10dif_pclmul       16384  1
+vmw_vsock_virtio_transport_common    40960  1 vsock_loopback
+ghash_clmulni_intel    16384  0
+vmw_vsock_vmci_transport    32768  2
+vsock                  45056  7 vmw_vsock_virtio_transport_common,vsock_loopback,vmw_vsock_vmci_transport
+aesni_intel           376832  0
+crypto_simd            16384  1 aesni_intel
+cryptd                 24576  2 crypto_simd,ghash_clmulni_intel
+rapl                   20480  0
+snd_ens1371            32768  2
+snd_ac97_codec        180224  1 snd_ens1371
+gameport               20480  1 snd_ens1371
+ac97_bus               16384  1 snd_ac97_codec
+vmw_balloon            24576  0
+snd_pcm               139264  2 snd_ac97_codec,snd_ens1371
+snd_seq_midi           20480  0
+snd_seq_midi_event     16384  1 snd_seq_midi
+nls_iso8859_1          16384  1
+snd_rawmidi            49152  2 snd_seq_midi,snd_ens1371
+snd_seq                73728  2 snd_seq_midi,snd_seq_midi_event
+snd_seq_device         16384  3 snd_seq,snd_seq_midi,snd_rawmidi
+joydev                 32768  0
+input_leds             16384  0
+snd_timer              40960  2 snd_seq,snd_pcm
+serio_raw              20480  0
+snd                   102400  11 snd_seq,snd_seq_device,snd_timer,snd_ac97_codec,snd_pcm,snd_rawmidi,snd_ens1371
+btusb                  61440  0
+btrtl                  24576  1 btusb
+btbcm                  24576  1 btusb
+btintel                40960  1 btusb
+bluetooth             688128  27 btrtl,btintel,btbcm,bnep,btusb,rfcomm
+ecdh_generic           16384  1 bluetooth
+ecc                    36864  1 ecdh_generic
+soundcore              16384  1 snd
+vmw_vmci               81920  2 vmw_balloon,vmw_vsock_vmci_transport
+mac_hid                16384  0
+sch_fq_codel           20480  2
+vmwgfx                360448  17
+ttm                    86016  1 vmwgfx
+drm_kms_helper        307200  1 vmwgfx
+cec                    61440  1 drm_kms_helper
+rc_core                65536  1 cec
+fb_sys_fops            16384  1 drm_kms_helper
+syscopyarea            16384  1 drm_kms_helper
+sysfillrect            20480  1 drm_kms_helper
+sysimgblt              16384  1 drm_kms_helper
+ipmi_devintf           20480  0
+ipmi_msghandler       122880  1 ipmi_devintf
+msr                    16384  0
+parport_pc             49152  0
+ppdev                  24576  0
+lp                     28672  0
+parport                65536  3 parport_pc,lp,ppdev
+drm                   606208  13 vmwgfx,drm_kms_helper,ttm
+ip_tables              32768  0
+x_tables               53248  1 ip_tables
+autofs4                49152  2
+hid_generic            16384  0
+crc32_pclmul           16384  0
+psmouse               176128  0
+usbhid                 65536  0
+hid                   147456  2 usbhid,hid_generic
+mptspi                 24576  2
+mptscsih               49152  1 mptspi
+mptbase               106496  2 mptspi,mptscsih
+ahci                   45056  2
+libahci                45056  1 ahci
+scsi_transport_spi     32768  1 mptspi
+e1000                 155648  0
+i2c_piix4              28672  0
+pata_acpi              16384  0
+floppy                118784  0
+) = 3372
+exit_group(0)                           = ?
++++ exited with 0 +++
