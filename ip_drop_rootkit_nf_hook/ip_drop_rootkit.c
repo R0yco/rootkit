@@ -34,7 +34,7 @@ static unsigned int drop_ip(void *priv, struct sk_buff *skb, const struct nf_hoo
 	return NF_ACCEPT;
 }
 
-static int __init LKM_init(void)
+static int __init rootkit_enter(void)
 {
 	nfho = (struct nf_hook_ops*)kcalloc(1, sizeof(struct nf_hook_ops), GFP_KERNEL);
 	
@@ -48,11 +48,11 @@ static int __init LKM_init(void)
 	return 0;
 }
 
-static void __exit LKM_exit(void)
+static void __exit rootkit_exit(void) {
 {
 	nf_unregister_net_hook(&init_net, nfho);
 	kfree(nfho);
 }
 
-module_init(LKM_init);
-module_exit(LKM_exit);
+module_init(rootkit_enter);
+module_exit(rootkit_exit);
