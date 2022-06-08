@@ -163,3 +163,99 @@ make this work on ARP as well (since arp doesn't have an ip header), make a filt
 but this is but a humble PoC.
 
 
+
+
+
+
+
+# more on level 5
+
+the tcp_rcv function contains this line:
+
+```c
+return NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
+		       net, NULL, skb, dev, NULL,
+		       ip_rcv_finish);
+```
+
+
+
+as I stated earlier, there are better ways to inspect and drop traffic from kernel, one of which is writing a netfilter hook.
+netfilter hooks are a kernel "API" for adding a callback function on various parts of the packet proccessing inside the linux kernel.
+this allows for a much  "correct" solution which (I assume) is also more runtime-efficient.
+
+I use [this article](https://infosecwriteups.com/linux-kernel-communication-part-1-netfilter-hooks-15c07a5a5c4e) as reference.
+
+this is the function the blog author wrote as a netfilter hook.
+
+**disclaimer** not my code 
+
+```c
+static unsigned int hfunc(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+{
+	struct iphdr *iph;
+	struct udphdr *udph;
+	if (!skb)
+		return NF_ACCEPT;
+
+	iph = ip_hdr(skb);
+	if (iph->protocol == IPPROTO_UDP) {
+		udph = udp_hdr(skb);
+		if (ntohs(udph->dest) == 53) {
+			return NF_ACCEPT;
+		}
+	}
+	else if (iph->protocol == IPPROTO_TCP) {
+		return NF_ACCEPT;
+	}
+	
+	return NF_DROP;
+}
+```
+
+in the article he mentions there are 5 types of NF hooks on IPv4 packets:
+
+```
+A Packet Traversing the Netfilter System:
+--->[1]--->[ROUTE]--->[3]--->[4]--->
+                 |            ^
+                 |            |
+                 |         [ROUTE]
+                 v            |
+                [2]          [5]
+                 |            ^
+                 |            |
+                 v            |
+```
+
+so the one I care about here is [1] : pre
+
+
+
+my modified version for blocking specific source ip address:
+
+```c
+static unsigned int hfunc(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+{
+	struct iphdr *ip_header;
+	unsigned int src_ip;
+	if (!skb)
+		return NF_ACCEPT;
+
+	ip_header = ip_hdr(skb);
+	src_ip = (unsigned int)ip_header->saddr;
+	if (src_ip == 0x01010101)
+	{
+		return NF_DROP;
+	}
+	
+	return NF_ACCEPT;
+}
+```
+
+
+
+looks very much like my other solution for level 5, but this is probably better.
+
+for the moment I will not merge it into my rootkit. it is in a seperate module for now.
+

