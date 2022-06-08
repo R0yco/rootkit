@@ -50,7 +50,6 @@ static int __init rootkit_enter(void) {
 
 static void __exit rootkit_exit(void) {
 
-
 	//remove ftrace hooks
 	fh_remove_hooks(hooks, ARRAY_SIZE(hooks));
 	printk(KERN_INFO "module hiding rootkit: stopped\n");
