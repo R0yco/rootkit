@@ -1,2 +1,2 @@
-/home/royco/rootkit/combined_rootkit/hooks.o
+/home/royco/rootkit/combined_rootkit/rootkit.o
 

