@@ -26,4 +26,4 @@ a simple rootkit for linux, capable of:
 
    if provided with above params, it does those features as well.
 
-   
+   currently does not check validity of params, so please do not mess with the formats or you might crash your kernel to hell :smile:
