@@ -182,6 +182,7 @@ return NF_HOOK(NFPROTO_IPV4, NF_INET_PRE_ROUTING,
 
 as I stated earlier, there are better ways to inspect and drop traffic from kernel, one of which is writing a netfilter hook.
 netfilter hooks are a kernel "API" for adding a callback function on various parts of the packet proccessing inside the linux kernel.
+
 this allows for a much  "correct" solution which (I assume) is also more runtime-efficient.
 
 I use [this article](https://infosecwriteups.com/linux-kernel-communication-part-1-netfilter-hooks-15c07a5a5c4e) as reference.
