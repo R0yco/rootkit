@@ -748,3 +748,9 @@ for the moment I will not merge it into my rootkit. it is in a seperate module f
 
 now I can add this into my main rootkit.
 
+## more on debugging crashes
+
+following [this guide](https://ubuntu.com/server/docs/kernel-crash-dump) for ubuntu which I developed the rootkit on, I found out how to install and setup kdump which allows for easier debugging. when the kernel crashes, it adds an entry in ```/var/crash/{date}``` which contains a copy of the dmesg, where you can find a detailed stack trace, register states etc.. useful.
+
+
+

