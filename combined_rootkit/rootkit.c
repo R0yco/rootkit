@@ -58,10 +58,10 @@ MODULE_PARM_DESC(pid_to_hide, "pid to hide from getdents64 syscall- and from ps 
 
 
 module_param(ip_to_block, charp, 0000);
-MODULE_PARM_DESC(ip_to_block, "block ip from incomming traffic to userspace");
+MODULE_PARM_DESC(ip_to_block, "block ip from incomming traffic to userspace.");
 
 module_param(port_to_hide, short, 0000);
-MODULE_PARM_DESC(ip_to_block, "block ip from incomming traffic to userspace");
+MODULE_PARM_DESC(ip_to_block, "hide local listening port from prying eyes.");
 
 
 
